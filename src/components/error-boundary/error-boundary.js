@@ -3,15 +3,11 @@ import ErrorIndicator from "../error-indicator";
 
 class ErrorBoundary extends Component {
 
-    state = {hasError:false};
+    state = {hasError: false};
 
     static getDerivedStateFromError(){
         return {hasError: true};
     }
-
-  /*  componentDidCatch(error, errorInfo) {
-        super.componentDidCatch(error, errorInfo);
-    }*/
 
     render() {
 
@@ -19,7 +15,7 @@ class ErrorBoundary extends Component {
             return <ErrorIndicator/>
         }
 
-        return this.prop.children;
+        return this.props.children;
     }
 }
 

@@ -1,4 +1,17 @@
 
+const dataLoad = () => {
+    return {
+        type: 'DATA_LOAD'
+    }
+}
+
+const errorLoaded = (error) => {
+    return {
+        type: 'ERROR_LOADED',
+        payload: error.toString()
+    }
+}
+
 const booksLoaded = (newBooks) => {
     return {
         type: 'BOOKS_LOADED',
@@ -7,5 +20,7 @@ const booksLoaded = (newBooks) => {
 }
 
 export {
-    booksLoaded
+    booksLoaded,
+    dataLoad,
+    errorLoaded
 }

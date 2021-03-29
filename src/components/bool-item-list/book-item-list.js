@@ -1,5 +1,5 @@
 import React from 'react';
-import './bool-list-item.css'
+import './bool-item-list.css'
 
 const BookItemList = ({book}) => {
     const {title, author, price, coverImg} = book;
@@ -9,7 +9,7 @@ const BookItemList = ({book}) => {
                 <img src={coverImg} alt="cover"/>
             </div>
             <div className="book-detail">
-                <a href="#" className="book-title">{title}</a>
+                <span className="book-title">{title}</span>
                 <div className="book-author">{author}</div>
                 <div className="book-price">${price}</div>
                 <button className="btn btn-info add-to-chart">Add to chart</button>

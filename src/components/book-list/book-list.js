@@ -3,19 +3,30 @@ import './book-list.css'
 import BookItemList from "../bool-item-list";
 import {connect} from "react-redux";
 import {withBookstoreServiceContext} from "../hoc";
-import {booksLoaded} from "../../actions";
+import {booksLoaded, dataLoad, errorLoaded} from "../../actions";
 import {compose} from "../../utils";
+import Loader from "../loader";
+import ErrorIndicator from "../error-indicator";
 
 class BookList extends Component {
 
     componentDidMount() {
-        const {bookStoreService, booksLoaded} = this.props;
-        const books = bookStoreService.getBooks();
-        booksLoaded(books);
+        /*const {bookStoreService, booksLoaded, dataLoad, errorLoaded} = this.props;
+        dataLoad();
+        bookStoreService.getBooks()
+            .then((data) => booksLoaded(data))
+            .catch((error) => errorLoaded(error));*/
+        this.props.fetchBooks();
     }
 
     render() {
-        const {books} = this.props;
+        const {books, loading, error} = this.props;
+        if (loading){
+            return <Loader/>
+        }
+        if (error) {
+            return <ErrorIndicator/>;
+        }
         return (
             <div className="book-list">
                 <ul>
@@ -26,16 +37,35 @@ class BookList extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {books: state.books}
+const mapStateToProps = ({books, loading, error}) => {
+    return {
+        books,
+        loading,
+        error
+    }
 }
 
 /*const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({booksLoaded}, dispatch);
 }*/
 
-const mapDispatchToProps = {
-    booksLoaded
+/*const mapDispatchToProps = {
+    booksLoaded,
+    dataLoad,
+    errorLoaded
+}*/
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    const {bookStoreService} = ownProps;
+    console.log(ownProps);
+    return {
+        fetchBooks: () => {
+            dispatch(dataLoad());
+            bookStoreService.getBooks()
+                .then((data) => dispatch(booksLoaded(data)))
+                .catch((error) => dispatch(errorLoaded(error)));
+        }
+    }
 }
 
 export default compose(

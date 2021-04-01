@@ -21,9 +21,9 @@ export default class BookStoreService {
 
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                if (Math.random() > 0.75){
+                /*if (Math.random() > 0.75){
                     reject(new Error('Error loading books'));
-                }
+                }*/
                 resolve(this.data);
             }, 700)
         });

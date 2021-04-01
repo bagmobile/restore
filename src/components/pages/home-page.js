@@ -1,11 +1,12 @@
 import React from 'react';
-import BookList from "../book-list";
 import ShoppingCartTable from "../shopping-cart-table";
+import {BookListContainer} from "../../containers";
+
 
 const HomePage = () => {
     return (
         <>
-            <BookList ggg={5}/>
+            <BookListContainer/>
             <ShoppingCartTable/>
         </>
     );

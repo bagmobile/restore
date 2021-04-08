@@ -1,20 +1,16 @@
 import React, {Component} from 'react';
 import Loader from "../components/loader";
 import ErrorIndicator from "../components/error-indicator";
-import {fetchBooks} from "../actions";
 import {compose} from "../utils";
 import {withBookstoreServiceContext} from "../components/hoc";
 import {connect} from "react-redux";
 import BookList from "../components/book-list";
+import {Operation} from "../reducers/books/books";
+import {getBooks, getError, getLoading} from "../reducers/books/selectors";
 
 class BookListContainer extends Component {
 
     componentDidMount() {
-        /*const {bookStoreService, booksLoaded, dataLoad, errorLoaded} = this.props;
-        dataLoad();
-        bookStoreService.getBooks()
-            .then((data) => booksLoaded(data))
-            .catch((error) => errorLoaded(error));*/
         this.props.fetchBooks();
     }
 
@@ -31,37 +27,21 @@ class BookListContainer extends Component {
     }
 }
 
-const mapStateToProps = ({books, loading, error}) => {
+const mapStateToProps = (state) => {
     return {
-        books,
-        loading,
-        error
+        books: getBooks(state),
+        loading: getLoading(state),
+        error: getError(state)
     }
 }
-
-/*const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({booksLoaded}, dispatch);
-}*/
-
-/*const mapDispatchToProps = {
-    booksLoaded,
-    dataLoad,
-    errorLoaded
-}*/
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     const {bookStoreService} = ownProps;
     return {
-        fetchBooks: fetchBooks(bookStoreService, dispatch)
-    }
-    /*return {
-        fetchBooks: () => {
-            dispatch(dataLoad());
-            bookStoreService.getBooks()
-                .then((data) => dispatch(booksLoaded(data)))
-                .catch((error) => dispatch(errorLoaded(error)));
+        fetchBooks: (params) => {
+            dispatch(Operation.fetchBooks(bookStoreService)(params))
         }
-    }*/
+    }
 }
 
 export default compose(

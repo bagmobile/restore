@@ -1,7 +1,7 @@
 import React from 'react';
 import './bool-item-list.css'
 import {connect} from "react-redux";
-import {addToCart} from "../../actions";
+import {Operation} from "../../reducers/cart/cart";
 
 const BookItemList = ({book, onAddedToCart}) => {
     const {id, title, author, price, coverImg} = book;
@@ -20,8 +20,10 @@ const BookItemList = ({book, onAddedToCart}) => {
     );
 };
 
-const mapDispatchToProps = {
-    onAddedToCart: addToCart
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onAddedToCart: (id) => dispatch(Operation.increaseCartItem(id))
+    }
 }
 
 export default connect(null, mapDispatchToProps)(BookItemList);

@@ -1,6 +1,6 @@
 import React from 'react';
-import ShoppingCartTable from "../shopping-cart-table";
 import {BookListContainer} from "../../containers";
+import ShoppingCartTable from "../shopping-cart-table";
 
 
 const HomePage = () => {
